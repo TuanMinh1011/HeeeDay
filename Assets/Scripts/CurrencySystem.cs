@@ -9,34 +9,35 @@ public enum CurrencyType
 
 public class CurrencySystem : MonoBehaviour
 {
-    private static Dictionary<CurrencyType, int> currencyAmounts = new Dictionary<CurrencyType, int>();
+    private int totalCoins = 0;
 
-    [SerializeField] private List<GameObject> texts;
-
-    private Dictionary<CurrencyType, TextMeshProUGUI> currencyText = new Dictionary<CurrencyType, TextMeshProUGUI>();
-
-    private void Awake()
-    {
-        for (int i = 0; i < texts.Count; i++)
-        {
-            currencyAmounts.Add((CurrencyType)i, 0);
-            currencyText.Add((CurrencyType)i, texts[i].transform.GetComponent<TextMeshProUGUI>());
-        }        
-    }
+    [SerializeField] private TextMeshProUGUI coinsText;
 
     private void Start()
     {
+        UpdateUI();
+
+        EventManager.Instance.AddListener<LoadDataGameEvent>(OnLoadCurrency);
         EventManager.Instance.AddListener<CurrencyChangeGameEvent>(OnCurrencyChange);
         EventManager.Instance.AddListener<NotEnoughCurrencyGameEvent>(OnNotEnough);
+    }
+
+    private void UpdateUI()
+    {
+        coinsText.text = totalCoins.ToString();
+    }
+
+    private void OnLoadCurrency(LoadDataGameEvent info)
+    {
+        totalCoins = info.User.Coins;
+        UpdateUI();
     }
 
     private void OnCurrencyChange(CurrencyChangeGameEvent info)
     {
         //todo save the currency
-        currencyAmounts[info.CurrencyType] += info.Amount;
-        currencyText[info.CurrencyType].text = currencyAmounts[info.CurrencyType].ToString();
-
-        Debug.Log("Whaatttttttt");
+        totalCoins += info.Amount;
+        UpdateUI();
     }
 
     private void OnNotEnough(NotEnoughCurrencyGameEvent info)

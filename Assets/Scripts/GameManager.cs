@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -6,16 +7,19 @@ public class GameManager : MonoBehaviour
 
     public GameObject canvas;
 
+    private DataManager dataManager;
+
     private void Awake()
     {
         current = this;
+
+        dataManager = GetComponentInChildren<DataManager>();
     }
 
-    //public void GetXP(int amount)
-    //{
-    //    XPAddedGameEvent info = new XPAddedGameEvent(amount);
-    //    EventManager.Instance.QueueEvent(info);
-    //}
+    private void Start()
+    {
+        dataManager.LoadDataUser();
+    }
 
     public void GetLevel(int amount)
     {
