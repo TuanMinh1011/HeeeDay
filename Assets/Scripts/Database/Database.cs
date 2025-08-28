@@ -18,6 +18,7 @@ public class Plant
 
 public class Seed
 {
+    public SeedType SeedType;
     public string Name;
     public int Amount;
     public int BuyPrice;
@@ -25,6 +26,7 @@ public class Seed
 
 public class Fruit
 {
+    public FruitType FruitType;
     public string Name;
     public int Amount;
 }
@@ -39,4 +41,16 @@ public class User
     public Seed[] SeedUnused;
     public Fruit[] FruitHarvest;
     public Land[] Lands;
+}
+
+public enum SeedType
+{
+    Tomato,
+    Cow
+}
+
+public enum FruitType
+{
+    Tomato,
+    Milk
 }

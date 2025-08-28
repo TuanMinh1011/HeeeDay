@@ -1,11 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-public enum CurrencyType
-{
-    Coin,
-    Crystals
-}
 
 public class CurrencySystem : MonoBehaviour
 {
@@ -42,6 +37,6 @@ public class CurrencySystem : MonoBehaviour
 
     private void OnNotEnough(NotEnoughCurrencyGameEvent info)
     {
-        Debug.Log($"You don't have enough of {info.Amount} {info.CurrencyType}");
+        Debug.Log($"You don't have enough of {info.Amount}");
     }
 }
