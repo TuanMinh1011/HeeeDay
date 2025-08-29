@@ -10,6 +10,7 @@ public class Land
 
 public class Plant
 {
+    public PlantType PlantType;
     public string Name;
     public float GrowthTime;
     public int NumbersInLifeCycle;
@@ -31,13 +32,21 @@ public class Fruit
     public int Amount;
 }
 
+public class Employee 
+{
+    public string Name;
+    public float TimeFinishWork;
+    public int RentPrice;
+    public bool IsWorking;
+}
+
+
 public class User
 {
     public string Username;
     public int Coins;
     public int Level;
-    public int EmployeesWorking;
-    public int EmployeesIdle;
+    public Employee[] Employees;
     public Seed[] SeedUnused;
     public Fruit[] FruitHarvest;
     public Land[] Lands;
@@ -53,4 +62,12 @@ public enum FruitType
 {
     Tomato,
     Milk
+}
+
+public enum PlantType
+{
+    Tomato,
+    Blueberry,
+    Strawberry,
+    Cow
 }

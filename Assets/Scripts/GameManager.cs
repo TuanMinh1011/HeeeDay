@@ -1,5 +1,5 @@
+using System.Linq;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,73 +19,76 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         dataManager.LoadDataUser();
+        dataManager.LoadDataPlant();
     }
 
-    public void GetLevel(int amount)
+    public void SetLevel(int amount)
     {
         LevelChangedGameEvent info = new LevelChangedGameEvent(amount);
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void GetCoins(int amount)
+    public void SetCoins(int amount)
     {
         CurrencyChangeGameEvent info = new CurrencyChangeGameEvent(amount);
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void GetIdle()
+    public void SetIdle(int amount)
     {
-        EmployeeChangedGameEvent info = new EmployeeChangedGameEvent(1, 0);
+        EmployeeIdleChangedGameEvent info = new EmployeeIdleChangedGameEvent(amount);
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void GetWorking()
+    public void SetWorking()
     {
-        EmployeeChangedGameEvent info = new EmployeeChangedGameEvent(0, 1);
+        EmployeeWorkingChangedGameEvent info = new EmployeeWorkingChangedGameEvent();
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void GetSeedTomato()
+    public void SetSeedTomato(int amount)
     {
-        SeedChangedGameEvent info = new SeedChangedGameEvent(1, SeedType.Tomato);
+        SeedChangedGameEvent info = new SeedChangedGameEvent(amount, SeedType.Tomato);
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void GetSeedCow()
+    public void SetSeedCow(int amount)
     {
-        SeedChangedGameEvent info = new SeedChangedGameEvent(1, SeedType.Cow);
+        SeedChangedGameEvent info = new SeedChangedGameEvent(amount, SeedType.Cow);
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void GetFruitTomato()
+    public void SetFruitTomato(int amount)
     {
-        FruitChangedGameEvent info = new FruitChangedGameEvent(1, FruitType.Tomato);
+        FruitChangedGameEvent info = new FruitChangedGameEvent(amount, FruitType.Tomato);
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void GetFruitMilk()
+    public void SetFruitMilk(int amount)
     {
-        FruitChangedGameEvent info = new FruitChangedGameEvent(1, FruitType.Milk);
+        FruitChangedGameEvent info = new FruitChangedGameEvent(amount, FruitType.Milk);
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void GetLandSpace()
+    public void SetLandSpace(int amount)
     {
-        LandSpaceChangedGameEvent info = new LandSpaceChangedGameEvent(1);
+        LandSpaceChangedGameEvent info = new LandSpaceChangedGameEvent(amount);
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void GetLandPlated()
+    public void SetLandPlated(int amount, PlantType plantType)
     {
-        Plant plant = new Plant()
-        {
-            Name = "Tomato",
-            GrowthTime = 600,
-            NumbersInLifeCycle = 40,
-            SellPrice = 5
-        };
+        Plant plant = dataManager.Plants.FirstOrDefault(x => x.PlantType == plantType);
 
-        LandPlatedChangedGameEvent info = new LandPlatedChangedGameEvent(1, plant);
+        //Plant plant = new Plant()
+        //{
+        //    Name = "Tomato",
+        //    GrowthTime = 600,
+        //    NumbersInLifeCycle = 40,
+        //    SellPrice = 5
+        //};
+
+        LandPlatedChangedGameEvent info = new LandPlatedChangedGameEvent(amount, plant);
         EventManager.Instance.QueueEvent(info);
     }
 }

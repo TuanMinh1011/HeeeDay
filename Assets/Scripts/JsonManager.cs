@@ -4,27 +4,29 @@ using UnityEngine;
 
 public class JsonManager : MonoBehaviour
 {
-    private string filePath;
+    private string fileUserPath;
+    private string filePlantPath;
 
     void Awake()
     {
-        filePath = Path.Combine(Application.persistentDataPath, "userData.json");
+        fileUserPath = Path.Combine(Application.persistentDataPath, "userData.json");
+        filePlantPath = Path.Combine(Application.persistentDataPath, "plantData.json");
     }
 
     // Lưu User ra JSON
     public void SaveUser(User user)
     {
         string json = JsonConvert.SerializeObject(user);
-        File.WriteAllText(filePath, json);
-        Debug.Log("Saved user to " + filePath);
+        File.WriteAllText(fileUserPath, json);
+        Debug.Log("Saved user to " + fileUserPath);
     }
 
     // Load User từ JSON
     public User LoadUser(string json = null)
     {
-        if (File.Exists(filePath))
+        if (File.Exists(fileUserPath))
         {
-            json = File.ReadAllText(filePath);
+            json = File.ReadAllText(fileUserPath);
 
             User user = JsonConvert.DeserializeObject<User>(json);
             Debug.Log("Loaded user " + user.Username);
@@ -38,12 +40,27 @@ public class JsonManager : MonoBehaviour
                 Username = "NewPlayer",
                 Coins = 100,
                 Level = 1,
-                EmployeesIdle = 1,
-                EmployeesWorking = 0,
+                Employees = new Employee[0],
                 SeedUnused = new Seed[0],
                 FruitHarvest = new Fruit[0],
                 Lands = new Land[0]
             };
+        }
+    }
+
+    public Plant[] LoadPlants(string json = null)
+    {
+        if (File.Exists(filePlantPath))
+        {
+            json = File.ReadAllText(filePlantPath);
+            Plant[] plants = JsonConvert.DeserializeObject<Plant[]>(json);
+            Debug.Log("Loaded " + plants.Length + " plants from " + filePlantPath);
+            return plants;
+        }
+        else
+        {
+            Debug.LogError("No plant file found at " + filePlantPath);
+            return new Plant[0];
         }
     }
 }

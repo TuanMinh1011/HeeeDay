@@ -37,11 +37,15 @@ public class UIManger : MonoBehaviour
         UpdateUI();
 
         EventManager.Instance.AddListener<LoadDataGameEvent>(OnLoadData);
-        EventManager.Instance.AddListener<EmployeeChangedGameEvent>(OnEmployeeChanged);
+        EventManager.Instance.AddListener<EmployeeIdleChangedGameEvent>(OnEmployeeIdleChanged);
+        EventManager.Instance.AddListener<EmployeeWorkingSuccessGameEvent>(OnEmployeeWorkingSuccessChanged);
+        EventManager.Instance.AddListener<EmployeeWorkingFailedGameEvent>(OnEmployeeWorkingFailedChanged);
         EventManager.Instance.AddListener<SeedChangedGameEvent>(OnSeedChanged);
         EventManager.Instance.AddListener<FruitChangedGameEvent>(OnFruitChanged);
         EventManager.Instance.AddListener<LandSpaceChangedGameEvent>(OnLandSpaceChanged);
-        EventManager.Instance.AddListener<LandPlatedChangedGameEvent>(OnLandPlantedChanged);
+        //EventManager.Instance.AddListener<LandPlatedChangedGameEvent>(OnLandPlantedChanged);
+        EventManager.Instance.AddListener<LandPlantedSuccessGameEvent>(OnLandPlantedSuccessChanged);
+        EventManager.Instance.AddListener<LandPlantedFailedGameEvent>(OnLandPlantedFailedChanged);
 
         for (int i = 0; i < seedsTextList.Count; i++)
         {
@@ -58,8 +62,8 @@ public class UIManger : MonoBehaviour
 
     private void OnLoadData(LoadDataGameEvent info)
     {
-        idleAmount = info.User.EmployeesIdle;
-        workingAmount = info.User.EmployeesWorking;
+        idleAmount = info.User.Employees.Count(x => !x.IsWorking);
+        workingAmount = info.User.Employees.Count(x => x.IsWorking);
         landPlantedAmount = info.User.Lands.Count(x => x.IsPlanted);
         landSpaceAmount = info.User.Lands.Count(x => !x.IsPlanted);
         seedsAmount = info.User.SeedUnused.ToDictionary(x => x.SeedType, x => x.Amount);
@@ -88,12 +92,24 @@ public class UIManger : MonoBehaviour
         }
     }
 
-    private void OnEmployeeChanged(EmployeeChangedGameEvent info)
+    private void OnEmployeeIdleChanged(EmployeeIdleChangedGameEvent info)
     {
-        idleAmount += info.idle;
-        workingAmount += info.working;
+        idleAmount += info.IdleAmount;
 
         UpdateUI();
+    }
+
+    private void OnEmployeeWorkingSuccessChanged(EmployeeWorkingSuccessGameEvent info)
+    {
+        workingAmount += info.WorkingAmount;
+        idleAmount -= info.WorkingAmount;
+
+        UpdateUI();
+    }
+
+    private void OnEmployeeWorkingFailedChanged(EmployeeWorkingFailedGameEvent info)
+    {
+        Debug.LogError($"{info.Reason}");
     }
 
     private void OnSeedChanged(SeedChangedGameEvent info)
@@ -117,10 +133,16 @@ public class UIManger : MonoBehaviour
         UpdateUI();
     }
 
-    private void OnLandPlantedChanged(LandPlatedChangedGameEvent info)
+    private void OnLandPlantedSuccessChanged(LandPlantedSuccessGameEvent info)
     {
         landPlantedAmount += info.Amount;
+        landSpaceAmount -= info.Amount;
 
         UpdateUI();
+    }
+
+    private void OnLandPlantedFailedChanged(LandPlantedFailedGameEvent info)
+    {
+        Debug.LogError($"{info.Reason}");
     }
 }

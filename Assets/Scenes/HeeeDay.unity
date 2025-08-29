@@ -24922,12 +24922,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1891618907}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetSeedCow
-        m_Mode: 1
+        m_MethodName: SetSeedCow
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 100
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -25529,12 +25529,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1891618907}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetSeedTomato
-        m_Mode: 1
+        m_MethodName: SetSeedTomato
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 100
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -25938,12 +25938,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1891618907}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetWorking
+        m_MethodName: SetWorking
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 100
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -27597,12 +27597,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1891618907}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetLandPlated
-        m_Mode: 1
+        m_MethodName: SetLandPlated
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 100
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -27911,7 +27911,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1891618907}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetCoins
+        m_MethodName: SetCoins
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -28555,12 +28555,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1891618907}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetIdle
-        m_Mode: 1
+        m_MethodName: SetIdle
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 100
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -28935,7 +28935,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1891618907}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetLevel
+        m_MethodName: SetLevel
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29204,12 +29204,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1891618907}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetFruitMilk
-        m_Mode: 1
+        m_MethodName: SetFruitMilk
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 100
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -29399,12 +29399,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1891618907}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetFruitTomato
-        m_Mode: 1
+        m_MethodName: SetFruitTomato
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 100
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -29532,12 +29532,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1891618907}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetLandSpace
-        m_Mode: 1
+        m_MethodName: SetLandSpace
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 100
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

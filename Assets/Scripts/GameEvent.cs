@@ -45,15 +45,38 @@ public class LevelChangedGameEvent : GameEvent
     }
 }
 
-public class EmployeeChangedGameEvent : GameEvent
+public class EmployeeIdleChangedGameEvent : GameEvent
 {
-    public int idle;
-    public int working;
+    public int IdleAmount;
 
-    public EmployeeChangedGameEvent(int idleAmount, int workingAmount)
+    public EmployeeIdleChangedGameEvent(int amount)
     {
-        idle = idleAmount;
-        working = workingAmount;
+        IdleAmount = amount;
+    }
+}
+
+public class EmployeeWorkingChangedGameEvent : GameEvent
+{
+    public EmployeeWorkingChangedGameEvent()
+    { 
+    }
+}
+
+public class EmployeeWorkingSuccessGameEvent : GameEvent
+{
+    public int WorkingAmount;
+    public EmployeeWorkingSuccessGameEvent(int amount)
+    {
+        WorkingAmount = amount;
+    }
+}
+
+public class EmployeeWorkingFailedGameEvent : GameEvent
+{
+    public string Reason;
+    public EmployeeWorkingFailedGameEvent(string reason)
+    {
+        Reason = reason;
     }
 }
 
@@ -98,6 +121,24 @@ public class LandPlatedChangedGameEvent : GameEvent
     {
         Amount = amount;
         PlantedWith = plantedWith;
+    }
+}
+
+public class LandPlantedSuccessGameEvent : GameEvent
+{
+    public int Amount { get; set; }
+    public LandPlantedSuccessGameEvent(int amount)
+    {
+        Amount = amount;
+    }
+}
+
+public class LandPlantedFailedGameEvent : GameEvent
+{
+    public string Reason { get; set; }
+    public LandPlantedFailedGameEvent(string reason)
+    {
+        Reason = reason;
     }
 }
 
