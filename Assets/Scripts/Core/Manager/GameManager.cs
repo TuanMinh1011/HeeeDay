@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager current;
-
-    public GameObject canvas;
+    public static GameManager Instance;
 
     private DataManager dataManager;
 
     private void Awake()
     {
-        current = this;
+        Instance = this;
 
         dataManager = GetComponentInChildren<DataManager>();
     }
@@ -76,7 +74,7 @@ public class GameManager : MonoBehaviour
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void SetLandPlated(int amount, PlantType plantType)
+    public void SetLandPlated(Land land, PlantType plantType)
     {
         Plant plant = dataManager.Plants.FirstOrDefault(x => x.PlantType == plantType);
 
@@ -88,7 +86,7 @@ public class GameManager : MonoBehaviour
         //    SellPrice = 5
         //};
 
-        LandPlatedChangedGameEvent info = new LandPlatedChangedGameEvent(amount, plant);
+        LandPlatedChangedGameEvent info = new LandPlatedChangedGameEvent(1, land, plant);
         EventManager.Instance.QueueEvent(info);
     }
 }

@@ -14,7 +14,6 @@ public class Plant
     public string Name;
     public float GrowthTime;
     public int NumbersInLifeCycle;
-    public int SellPrice;
 }
 
 public class Seed
@@ -30,6 +29,7 @@ public class Fruit
     public FruitType FruitType;
     public string Name;
     public int Amount;
+    public int SellPrice;
 }
 
 public class Employee 
@@ -55,12 +55,16 @@ public class User
 public enum SeedType
 {
     Tomato,
+    Blueberry,
+    Strawberry,
     Cow
 }
 
 public enum FruitType
 {
     Tomato,
+    Blueberry,
+    Strawberry,
     Milk
 }
 

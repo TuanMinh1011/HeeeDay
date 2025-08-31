@@ -3,7 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class UIManger : MonoBehaviour
+public class UIMangerTest : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI idle;
     [SerializeField] private TextMeshProUGUI working;

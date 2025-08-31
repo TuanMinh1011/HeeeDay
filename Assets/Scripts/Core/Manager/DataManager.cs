@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -29,7 +30,7 @@ public class DataManager : MonoBehaviour
     {
         CurrentUser = jsonManager.LoadUser();
         LoadDataGameEvent info = new LoadDataGameEvent(CurrentUser);
-        EventManager.Instance.QueueEvent(info);
+        EventManager.Instance.TriggerEvent(info);
     }
 
     public void LoadDataPlant()
@@ -117,25 +118,32 @@ public class DataManager : MonoBehaviour
         CurrentUser.Lands = lands.ToArray();
 
         jsonManager.SaveUser(CurrentUser);
+
+        EventManager.Instance.TriggerEvent(new LandSpaceSuccessGameEvent(newLandSpace));
     }
 
     private void OnLandPlatedChanged(LandPlatedChangedGameEvent info)
     {
-        Land landSpace = CurrentUser.Lands.FirstOrDefault(x => !x.IsPlanted);
-        if (landSpace != null)
+        Land landSpace = CurrentUser.Lands.FirstOrDefault(x => x.Name == info.Land.Name);
+
+        try
         {
+            if (landSpace == null) throw new Exception("No available land to plant."); 
+
+            if (landSpace.IsPlanted) throw new Exception("This land is already planted.");
+
             landSpace.IsPlanted = true;
             landSpace.PlantedWith = info.PlantedWith;
             landSpace.TimeToHarvest = info.PlantedWith.GrowthTime * info.PlantedWith.NumbersInLifeCycle;
 
-            LandPlantedSuccessGameEvent success = new LandPlantedSuccessGameEvent(1);
+            LandPlantedSuccessGameEvent success = new LandPlantedSuccessGameEvent(1, landSpace);
             EventManager.Instance.TriggerEvent(success);
 
             jsonManager.SaveUser(CurrentUser);
         }
-        else
+        catch (Exception ex)
         {
-            LandPlantedFailedGameEvent failed = new LandPlantedFailedGameEvent("No available land to plant.");
+            LandPlantedFailedGameEvent failed = new LandPlantedFailedGameEvent(ex.Message);
             EventManager.Instance.TriggerEvent(failed);
         }
     }

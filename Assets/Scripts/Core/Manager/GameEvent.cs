@@ -112,14 +112,25 @@ public class LandSpaceChangedGameEvent : GameEvent
     }
 }
 
+public class LandSpaceSuccessGameEvent : GameEvent
+{
+    public Land Land { get; set; }
+    public LandSpaceSuccessGameEvent(Land land)
+    {
+        Land = land;
+    }
+}
+
 public class LandPlatedChangedGameEvent : GameEvent
 {
     public int Amount;
+    public Land Land;
     public Plant PlantedWith;
 
-    public LandPlatedChangedGameEvent(int amount, Plant plantedWith)
+    public LandPlatedChangedGameEvent(int amount, Land land, Plant plantedWith)
     {
         Amount = amount;
+        Land = land;
         PlantedWith = plantedWith;
     }
 }
@@ -127,9 +138,12 @@ public class LandPlatedChangedGameEvent : GameEvent
 public class LandPlantedSuccessGameEvent : GameEvent
 {
     public int Amount { get; set; }
-    public LandPlantedSuccessGameEvent(int amount)
+    public Land Land { get; set; }
+
+    public LandPlantedSuccessGameEvent(int amount, Land land)
     {
         Amount = amount;
+        Land = land;
     }
 }
 
