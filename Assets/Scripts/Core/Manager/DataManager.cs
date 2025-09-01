@@ -17,11 +17,11 @@ public class DataManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.Instance.AddListener<CurrencyChangeGameEvent>(OnCurrencyChange);
-        EventManager.Instance.AddListener<LevelChangedGameEvent>(OnLevelChanged);
-        EventManager.Instance.AddListener<EmployeeIdleChangedGameEvent>(OnEmployeeIdleChanged);
-        EventManager.Instance.AddListener<EmployeeWorkingChangedGameEvent>(OnEmployeeWorkingChanged);
+        //EventManager.Instance.AddListener<LevelChangedGameEvent>(OnLevelChanged);
+        //EventManager.Instance.AddListener<EmployeeIdleChangedGameEvent>(OnEmployeeIdleChanged);
+        //EventManager.Instance.AddListener<EmployeeWorkingChangedGameEvent>(OnEmployeeWorkingChanged);
         EventManager.Instance.AddListener<SeedChangedGameEvent>(OnSeedChanged);
-        EventManager.Instance.AddListener<FruitChangedGameEvent>(OnFruitChanged);
+        //EventManager.Instance.AddListener<FruitChangedGameEvent>(OnFruitChanged);
         EventManager.Instance.AddListener<LandSpaceChangedGameEvent>(OnLandSpaceChanged);
         EventManager.Instance.AddListener<LandPlatedChangedGameEvent>(OnLandPlatedChanged);
         EventManager.Instance.AddListener<LandSwitchToLandSpaceGameEvent>(OnSwitchToLandSpace);
@@ -42,66 +42,70 @@ public class DataManager : MonoBehaviour
     private void OnCurrencyChange(CurrencyChangeGameEvent info)
     {
         CurrentUser.Coins += info.Amount;
-        jsonManager.SaveUser(CurrentUser);
-    }
-
-    private void OnLevelChanged(LevelChangedGameEvent info)
-    {
-        CurrentUser.Level += info.newLvl;
-        jsonManager.SaveUser(CurrentUser);
-    }
-
-    private void OnEmployeeIdleChanged(EmployeeIdleChangedGameEvent info)
-    {
-        List<Employee> employees = CurrentUser.Employees.ToList();
-
-        Employee newEmployee = new Employee()
-        {
-            Name = "Employee " + (employees.Count + 1),
-            RentPrice = 500,
-            TimeFinishWork = 120,
-            IsWorking = false
-        };
-        employees.Add(newEmployee);
-
-        CurrentUser.Employees = employees.ToArray();
 
         jsonManager.SaveUser(CurrentUser);
     }
 
-    private void OnEmployeeWorkingChanged(EmployeeWorkingChangedGameEvent info)
-    {
-        Employee employee = CurrentUser.Employees.FirstOrDefault(x => !x.IsWorking);
+    //private void OnLevelChanged(LevelChangedGameEvent info)
+    //{
+    //    CurrentUser.Level += info.newLvl;
+    //    jsonManager.SaveUser(CurrentUser);
+    //}
 
-        if (employee != null)
-        {
-            employee.IsWorking = true;
+    //private void OnEmployeeIdleChanged(EmployeeIdleChangedGameEvent info)
+    //{
+    //    List<Employee> employees = CurrentUser.Employees.ToList();
 
-            EmployeeWorkingSuccessGameEvent success = new EmployeeWorkingSuccessGameEvent(1);
-            EventManager.Instance.TriggerEvent(success);
+    //    Employee newEmployee = new Employee()
+    //    {
+    //        Name = "Employee " + (employees.Count + 1),
+    //        RentPrice = 500,
+    //        TimeFinishWork = 120,
+    //        IsWorking = false
+    //    };
+    //    employees.Add(newEmployee);
 
-            jsonManager.SaveUser(CurrentUser);
-        }
-        else
-        {
-            EmployeeWorkingFailedGameEvent failed = new EmployeeWorkingFailedGameEvent("No idle employee available.");
-            EventManager.Instance.TriggerEvent(failed);
-        }
-    }
+    //    CurrentUser.Employees = employees.ToArray();
+
+    //    jsonManager.SaveUser(CurrentUser);
+    //}
+
+    //private void OnEmployeeWorkingChanged(EmployeeWorkingChangedGameEvent info)
+    //{
+    //    Employee employee = CurrentUser.Employees.FirstOrDefault(x => !x.IsWorking);
+
+    //    if (employee != null)
+    //    {
+    //        employee.IsWorking = true;
+
+    //        EmployeeWorkingSuccessGameEvent success = new EmployeeWorkingSuccessGameEvent(1);
+    //        EventManager.Instance.TriggerEvent(success);
+
+    //        jsonManager.SaveUser(CurrentUser);
+    //    }
+    //    else
+    //    {
+    //        EmployeeWorkingFailedGameEvent failed = new EmployeeWorkingFailedGameEvent("No idle employee available.");
+    //        EventManager.Instance.TriggerEvent(failed);
+    //    }
+    //}
 
     private void OnSeedChanged(SeedChangedGameEvent info)
     {
         CurrentUser.SeedUnused.FirstOrDefault(x => x.SeedType == info.SeedType).Amount += info.Amount;
 
         jsonManager.SaveUser(CurrentUser);
+
+        Debug.Log("OnSeedChanged: " + info.Amount);
+        Debug.Log("CurrentUser.SeedUnused: " + CurrentUser.SeedUnused.FirstOrDefault(x => x.SeedType == info.SeedType).Amount);
     }
 
-    private void OnFruitChanged(FruitChangedGameEvent info)
-    {
-        CurrentUser.FruitHarvest.FirstOrDefault(x => x.FruitType == info.FruitType).Amount += info.Amount;
+    //private void OnFruitChanged(FruitChangedGameEvent info)
+    //{
+    //    CurrentUser.FruitHarvest.FirstOrDefault(x => x.FruitType == info.FruitType).Amount += info.Amount;
 
-        jsonManager.SaveUser(CurrentUser);
-    }
+    //    jsonManager.SaveUser(CurrentUser);
+    //}
 
     private void OnLandSpaceChanged(LandSpaceChangedGameEvent info)
     {
@@ -135,12 +139,18 @@ public class DataManager : MonoBehaviour
 
             if (landSpace.IsPlanted) throw new Exception("This land is already planted.");
 
+            Seed seed = CurrentUser.SeedUnused.FirstOrDefault(x => x.SeedType == (SeedType)info.PlantedWith.PlantType);
+            if (seed.Amount <= 0) throw new Exception("Not enough seeds to plant"); 
+
             landSpace.IsPlanted = true;
             landSpace.PlantedWith = info.PlantedWith;
             landSpace.TimeToHarvest = info.PlantedWith.GrowthTime * info.PlantedWith.NumbersInLifeCycle;
 
             LandPlantedSuccessGameEvent success = new LandPlantedSuccessGameEvent(1, landSpace);
             EventManager.Instance.TriggerEvent(success);
+
+            SeedChangedGameEvent infoff = new SeedChangedGameEvent(-1, (SeedType)landSpace.PlantedWith.PlantType);
+            EventManager.Instance.TriggerEvent(infoff);
 
             info.OnLandSelected?.Invoke(landSpace);
 
@@ -162,8 +172,6 @@ public class DataManager : MonoBehaviour
         landPlanted.TimeToHarvest = 0;
 
         jsonManager.SaveUser(CurrentUser);
-
-        EventManager.Instance.TriggerEvent(new LandSwitchToLandSpaceSuccessGameEvent(landPlanted));
 
         info.OnLandSwitchSelected?.Invoke(landPlanted);
     }

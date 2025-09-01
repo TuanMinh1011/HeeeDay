@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class SeedUIManager : MonoBehaviour
 {
     private Land _land;
-    private LandController _landController;
 
     [SerializeField] private GameObject seedPanel;
 

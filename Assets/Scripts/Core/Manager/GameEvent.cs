@@ -173,13 +173,13 @@ public class LandSwitchToLandSpaceGameEvent : GameEvent
     }
 }
 
-public class LandSwitchToLandSpaceSuccessGameEvent : GameEvent
-{
-    public Land Land { get; set; }
-    public LandSwitchToLandSpaceSuccessGameEvent(Land land)
-    {
-        Land = land;
-    }
-}
+//public class LandSwitchToLandSpaceSuccessGameEvent : GameEvent
+//{
+//    public Land Land { get; set; }
+//    public LandSwitchToLandSpaceSuccessGameEvent(Land land)
+//    {
+//        Land = land;
+//    }
+//}
 
 

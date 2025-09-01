@@ -89,5 +89,8 @@ public class GameManager : MonoBehaviour
 
         LandPlatedChangedGameEvent info = new LandPlatedChangedGameEvent(1, land, plant, onLandSelected);
         EventManager.Instance.QueueEvent(info);
+
+        //SeedChangedGameEvent infoo = new SeedChangedGameEvent(-1, (SeedType)plantType);
+        //EventManager.Instance.QueueEvent(infoo);
     }
 }
