@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -68,13 +69,13 @@ public class GameManager : MonoBehaviour
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void SetLandSpace(int amount)
+    public void SetLandSpace(int amount, Action<Land> OnLandSpaceSelected)
     {
-        LandSpaceChangedGameEvent info = new LandSpaceChangedGameEvent(amount);
+        LandSpaceChangedGameEvent info = new LandSpaceChangedGameEvent(amount, OnLandSpaceSelected);
         EventManager.Instance.QueueEvent(info);
     }
 
-    public void SetLandPlated(Land land, PlantType plantType)
+    public void SetLandPlated(Land land, PlantType plantType, Action<Land> onLandSelected)
     {
         Plant plant = dataManager.Plants.FirstOrDefault(x => x.PlantType == plantType);
 
@@ -86,7 +87,7 @@ public class GameManager : MonoBehaviour
         //    SellPrice = 5
         //};
 
-        LandPlatedChangedGameEvent info = new LandPlatedChangedGameEvent(1, land, plant);
+        LandPlatedChangedGameEvent info = new LandPlatedChangedGameEvent(1, land, plant, onLandSelected);
         EventManager.Instance.QueueEvent(info);
     }
 }

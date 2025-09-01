@@ -18,13 +18,13 @@ public class InventoryManager : MonoBehaviour
         EventManager.Instance.AddListener<LandPlantedFailedGameEvent>(OnLandPlantedFaliedChanged);
     }
 
-    private void OnDisable()
-    {
-        EventManager.Instance.RemoveListener<LoadDataGameEvent>(OnLoadData);
-        EventManager.Instance.RemoveListener<LandSpaceChangedGameEvent>(OnLandSpanceChanged);
-        EventManager.Instance.RemoveListener<LandPlantedSuccessGameEvent>(OnLandPlantedSuccessChanged);
-        EventManager.Instance.RemoveListener<LandPlantedFailedGameEvent>(OnLandPlantedFaliedChanged);
-    }
+    //private void OnDisable()
+    //{
+    //    EventManager.Instance.RemoveListener<LoadDataGameEvent>(OnLoadData);
+    //    EventManager.Instance.RemoveListener<LandSpaceChangedGameEvent>(OnLandSpanceChanged);
+    //    EventManager.Instance.RemoveListener<LandPlantedSuccessGameEvent>(OnLandPlantedSuccessChanged);
+    //    EventManager.Instance.RemoveListener<LandPlantedFailedGameEvent>(OnLandPlantedFaliedChanged);
+    //}
 
     private void Start()
     {

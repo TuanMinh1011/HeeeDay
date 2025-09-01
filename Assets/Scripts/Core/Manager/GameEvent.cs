@@ -1,3 +1,5 @@
+using System;
+
 public abstract class GameEvent {}
 
 public class LoadDataGameEvent : GameEvent
@@ -106,9 +108,11 @@ public class FruitChangedGameEvent : GameEvent
 public class LandSpaceChangedGameEvent : GameEvent
 {
     public int Amount;
-    public LandSpaceChangedGameEvent(int amount)
+    public Action<Land> OnLandSpaceSelected;
+    public LandSpaceChangedGameEvent(int amount, Action<Land> onLandSpaceSelected)
     {
         Amount = amount;
+        OnLandSpaceSelected = onLandSpaceSelected;
     }
 }
 
@@ -126,12 +130,14 @@ public class LandPlatedChangedGameEvent : GameEvent
     public int Amount;
     public Land Land;
     public Plant PlantedWith;
+    public Action<Land> OnLandSelected;
 
-    public LandPlatedChangedGameEvent(int amount, Land land, Plant plantedWith)
+    public LandPlatedChangedGameEvent(int amount, Land land, Plant plantedWith, Action<Land> onLandSelected)
     {
         Amount = amount;
         Land = land;
         PlantedWith = plantedWith;
+        OnLandSelected = onLandSelected;
     }
 }
 
@@ -153,6 +159,26 @@ public class LandPlantedFailedGameEvent : GameEvent
     public LandPlantedFailedGameEvent(string reason)
     {
         Reason = reason;
+    }
+}
+
+public class LandSwitchToLandSpaceGameEvent : GameEvent
+{
+    public Land Land { get; set; }
+    public Action<Land> OnLandSwitchSelected;
+    public LandSwitchToLandSpaceGameEvent(Land land, Action<Land> onLandSwitchSelected)
+    {
+        Land = land;
+        OnLandSwitchSelected = onLandSwitchSelected;
+    }
+}
+
+public class LandSwitchToLandSpaceSuccessGameEvent : GameEvent
+{
+    public Land Land { get; set; }
+    public LandSwitchToLandSpaceSuccessGameEvent(Land land)
+    {
+        Land = land;
     }
 }
 

@@ -20,7 +20,7 @@ public class PlaceableObject : MonoBehaviour
         return false;
     }
 
-    public void Place()
+    public virtual void Place()
     {
         Vector3Int positionInt = BuildingSystem.Current.GridLayout.LocalToCell(transform.position);
         BoundsInt areaTemp = Area;
@@ -36,8 +36,6 @@ public class PlaceableObject : MonoBehaviour
         if (CanBePlaced())
         {
             Place();
-
-            GameManager.Instance.SetLandSpace(1);
         }
         else
         {

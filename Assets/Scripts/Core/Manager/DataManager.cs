@@ -24,6 +24,7 @@ public class DataManager : MonoBehaviour
         EventManager.Instance.AddListener<FruitChangedGameEvent>(OnFruitChanged);
         EventManager.Instance.AddListener<LandSpaceChangedGameEvent>(OnLandSpaceChanged);
         EventManager.Instance.AddListener<LandPlatedChangedGameEvent>(OnLandPlatedChanged);
+        EventManager.Instance.AddListener<LandSwitchToLandSpaceGameEvent>(OnSwitchToLandSpace);
     }
 
     public void LoadDataUser()
@@ -120,6 +121,8 @@ public class DataManager : MonoBehaviour
         jsonManager.SaveUser(CurrentUser);
 
         EventManager.Instance.TriggerEvent(new LandSpaceSuccessGameEvent(newLandSpace));
+
+        info.OnLandSpaceSelected?.Invoke(newLandSpace);
     }
 
     private void OnLandPlatedChanged(LandPlatedChangedGameEvent info)
@@ -139,6 +142,8 @@ public class DataManager : MonoBehaviour
             LandPlantedSuccessGameEvent success = new LandPlantedSuccessGameEvent(1, landSpace);
             EventManager.Instance.TriggerEvent(success);
 
+            info.OnLandSelected?.Invoke(landSpace);
+
             jsonManager.SaveUser(CurrentUser);
         }
         catch (Exception ex)
@@ -146,5 +151,20 @@ public class DataManager : MonoBehaviour
             LandPlantedFailedGameEvent failed = new LandPlantedFailedGameEvent(ex.Message);
             EventManager.Instance.TriggerEvent(failed);
         }
+    }
+
+    private void OnSwitchToLandSpace(LandSwitchToLandSpaceGameEvent info)
+    {
+        Land landPlanted = CurrentUser.Lands.FirstOrDefault(x => x.Name == info.Land.Name);
+
+        landPlanted.IsPlanted = false;
+        landPlanted.PlantedWith = null;
+        landPlanted.TimeToHarvest = 0;
+
+        jsonManager.SaveUser(CurrentUser);
+
+        EventManager.Instance.TriggerEvent(new LandSwitchToLandSpaceSuccessGameEvent(landPlanted));
+
+        info.OnLandSwitchSelected?.Invoke(landPlanted);
     }
 }
