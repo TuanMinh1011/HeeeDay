@@ -3,9 +3,10 @@ using UnityEngine;
 public class Land
 {
     public string Name;
-    public float TimeToHarvest;
     public bool IsPlanted;
     public Plant PlantedWith;
+    public double StartTime;
+    public SerializableVector3 LandPos;
 }
 
 public class Plant
@@ -14,6 +15,8 @@ public class Plant
     public string Name;
     public float GrowthTime;
     public int NumbersInLifeCycle;
+    public int CurrentCycle;
+
 }
 
 public class Seed
@@ -50,6 +53,7 @@ public class User
     public Seed[] SeedUnused;
     public Fruit[] FruitHarvest;
     public Land[] Lands;
+    public double LastLoginTime;
 }
 
 public enum SeedType
@@ -74,4 +78,18 @@ public enum PlantType
     Blueberry,
     Strawberry,
     Cow
+}
+
+public struct SerializableVector3
+{
+    public float x;
+    public float y;
+    public float z;
+
+    public SerializableVector3(float x, float y, float z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 }

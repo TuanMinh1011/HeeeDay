@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public abstract class GameEvent {}
 
@@ -109,21 +110,23 @@ public class LandSpaceChangedGameEvent : GameEvent
 {
     public int Amount;
     public Action<Land> OnLandSpaceSelected;
-    public LandSpaceChangedGameEvent(int amount, Action<Land> onLandSpaceSelected)
+    public Vector3 Position;
+    public LandSpaceChangedGameEvent(int amount, Action<Land> onLandSpaceSelected, Vector3 position)
     {
         Amount = amount;
         OnLandSpaceSelected = onLandSpaceSelected;
+        Position = position;
     }
 }
 
-public class LandSpaceSuccessGameEvent : GameEvent
-{
-    public Land Land { get; set; }
-    public LandSpaceSuccessGameEvent(Land land)
-    {
-        Land = land;
-    }
-}
+//public class LandSpaceSuccessGameEvent : GameEvent
+//{
+//    public Land Land { get; set; }
+//    public LandSpaceSuccessGameEvent(Land land)
+//    {
+//        Land = land;
+//    }
+//}
 
 public class LandPlatedChangedGameEvent : GameEvent
 {

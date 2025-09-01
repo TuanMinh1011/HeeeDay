@@ -114,9 +114,10 @@ public class DataManager : MonoBehaviour
         Land newLandSpace = new Land()
         {
             Name = "Land " + (lands.Count + 1),
-            TimeToHarvest = 0,
             IsPlanted = false,
-            PlantedWith = null
+            PlantedWith = null,
+            StartTime = 0,
+            LandPos = new SerializableVector3(info.Position.x, info.Position.y, info.Position.z)
         };
         lands.Add(newLandSpace);
 
@@ -124,7 +125,7 @@ public class DataManager : MonoBehaviour
 
         jsonManager.SaveUser(CurrentUser);
 
-        EventManager.Instance.TriggerEvent(new LandSpaceSuccessGameEvent(newLandSpace));
+        //EventManager.Instance.TriggerEvent(new LandSpaceSuccessGameEvent(newLandSpace));
 
         info.OnLandSpaceSelected?.Invoke(newLandSpace);
     }
@@ -144,7 +145,7 @@ public class DataManager : MonoBehaviour
 
             landSpace.IsPlanted = true;
             landSpace.PlantedWith = info.PlantedWith;
-            landSpace.TimeToHarvest = info.PlantedWith.GrowthTime * info.PlantedWith.NumbersInLifeCycle;
+            landSpace.StartTime = GameManager.Instance.GetCurrentTimestamp();
 
             LandPlantedSuccessGameEvent success = new LandPlantedSuccessGameEvent(1, landSpace);
             EventManager.Instance.TriggerEvent(success);
@@ -169,10 +170,10 @@ public class DataManager : MonoBehaviour
 
         landPlanted.IsPlanted = false;
         landPlanted.PlantedWith = null;
-        landPlanted.TimeToHarvest = 0;
 
         jsonManager.SaveUser(CurrentUser);
 
         info.OnLandSwitchSelected?.Invoke(landPlanted);
     }
+
 }

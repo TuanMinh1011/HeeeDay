@@ -68,6 +68,17 @@ public class BuildingSystem : MonoBehaviour
         temp.gameObject.AddComponent<ObjectDrag>();
     }
 
+    public void InitializeWithObjectFromData(GameObject building, Vector3 pos, Land land)
+    {
+        pos.z = 0;
+        pos.y -= building.GetComponentInChildren<SpriteRenderer>().bounds.size.y / 2f;
+        Vector3Int cellPos = GridLayout.WorldToCell(pos);
+        Vector3 position = GridLayout.CellToLocalInterpolated(cellPos);
+
+        GameObject obj = Instantiate(building, position, Quaternion.identity);
+        obj.GetComponent<LandController>().LoadDataLand(land);
+    }
+
     public bool CanTakeArea(BoundsInt area)
     {
         TileBase[] tileArray = GetTilesBlock(area, MainTilemap);

@@ -98,6 +98,8 @@ public class LandController : PlaceableObject
 
     private void OnLandSpaceSuccessChanged(Land _land)
     {
+        spriteRenderer.sprite = landSprite;
+
         land = _land;
     }
 
@@ -147,10 +149,28 @@ public class LandController : PlaceableObject
     //    }
     //}
 
-    public override void Place()
+    public override void Place(bool isLoadData = false)
     {
         base.Place();
 
-        GameManager.Instance.SetLandSpace(1, OnLandSpaceSelected);
+        if (isLoadData) return;
+        
+        GameManager.Instance.SetLandSpace(1, OnLandSpaceSelected, transform.position);
+    }
+
+    public void LoadDataLand(Land _land)
+    {
+        Place(true);
+
+        land = _land;
+
+        if (land.IsPlanted)
+        {
+            OnLandPlantedSuccessChanged(land);
+        }
+        else
+        {
+            OnLandSpaceSuccessChanged(land);
+        }
     }
 }

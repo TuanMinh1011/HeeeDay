@@ -16,6 +16,8 @@ public class JsonManager : MonoBehaviour
     // Lưu User ra JSON
     public void SaveUser(User user)
     {
+        user.LastLoginTime = GameManager.Instance.GetCurrentTimestamp();
+
         string json = JsonConvert.SerializeObject(user);
         File.WriteAllText(fileUserPath, json);
         Debug.Log("Saved user to " + fileUserPath);
