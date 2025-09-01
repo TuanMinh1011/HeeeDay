@@ -16,7 +16,6 @@ public class Plant
     public float GrowthTime;
     public int NumbersInLifeCycle;
     public int CurrentCycle;
-
 }
 
 public class Seed

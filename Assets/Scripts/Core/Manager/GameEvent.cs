@@ -176,6 +176,18 @@ public class LandSwitchToLandSpaceGameEvent : GameEvent
     }
 }
 
+public class LandUpdateLifeCircleGameEvent : GameEvent
+{
+    public Land Land { get; set; }
+    public int LifeCircle { get; set; }
+
+    public LandUpdateLifeCircleGameEvent(Land land, int lifeCircle)
+    {
+        Land = land;
+        LifeCircle = lifeCircle;
+    }
+}
+
 //public class LandSwitchToLandSpaceSuccessGameEvent : GameEvent
 //{
 //    public Land Land { get; set; }

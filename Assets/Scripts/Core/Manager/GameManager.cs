@@ -58,8 +58,6 @@ public class GameManager : MonoBehaviour
         foreach (Land land in lands)
         {
             BuildingSystem.Current.InitializeWithObjectFromData(plant, new Vector3(land.LandPos.x, land.LandPos.y, land.LandPos.z), land);
-
-            Debug.Log("Land " + lands.Count);
         }
     }
 

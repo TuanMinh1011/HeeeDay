@@ -1,12 +1,14 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR;
 
 public class Timer : MonoBehaviour
 {
     public string Name { get; private set; }
     public bool IsRunning { get; private set; }
-    
+
     private DateTime startTime;
     public TimeSpan timeToFinish { get; private set; }
     private DateTime finishTime;
@@ -14,7 +16,7 @@ public class Timer : MonoBehaviour
 
     public double secondsLeft { get; private set; }
 
-    public int LifeCycle;
+    public int LifeCircle;
 
     public void Initialize(string processName, DateTime start, TimeSpan time, int lifeCycle)
     {
@@ -23,7 +25,21 @@ public class Timer : MonoBehaviour
         startTime = start;
         timeToFinish = time;
         finishTime = start.Add(time);
-        LifeCycle = lifeCycle;
+        LifeCircle = lifeCycle;
+        //OnUpdateLifeCircle = onUpdateLifeCircle;
+
+        TimerFinishEvent = new UnityEvent();
+    }
+
+    public void InitializeForLoadData(string processName, DateTime start, TimeSpan time, int lifeCircle)
+    {
+        Name = processName;
+
+        startTime = start;
+        timeToFinish = time;
+        finishTime = start.Add(time);
+        LifeCircle = lifeCircle;
+        //OnUpdateLifeCircle = onUpdateLifeCircle;
 
         TimerFinishEvent = new UnityEvent();
     }
@@ -44,10 +60,10 @@ public class Timer : MonoBehaviour
             }
             else
             {
-                StartTimer();
+                EndCircle();
             }
 
-            if (LifeCycle <= 0)
+            if (LifeCircle <= 0)
             {
                 TimerFinishEvent.Invoke();
                 secondsLeft = 0;
@@ -88,17 +104,32 @@ public class Timer : MonoBehaviour
         return text;
     }
 
+    private void EndCircle()
+    {
+        StartTimer();
+        LifeCircle--;
+
+        //OnUpdateLifeCircle?.Invoke(LifeCircle);
+        EventManager.Instance.TriggerEvent(new LandUpdateLifeCircleGameEvent(GetComponent<LandController>().Land, LifeCircle));
+    }
+
     public void SkipTimer()
     {
         secondsLeft = 0;
         finishTime = DateTime.Now;
-        LifeCycle--;
+        LifeCircle--;
+
+        //OnUpdateLifeCircle?.Invoke(LifeCircle);
+        EventManager.Instance.TriggerEvent(new LandUpdateLifeCircleGameEvent(GetComponent<LandController>().Land, LifeCircle));
     }
 
     public void SkipAllTimer()
     {
         secondsLeft = 0;
         finishTime = DateTime.Now;
-        LifeCycle = 0;
+        LifeCircle = 0;
+
+        //OnUpdateLifeCircle?.Invoke(LifeCircle);
+        EventManager.Instance.TriggerEvent(new LandUpdateLifeCircleGameEvent(GetComponent<LandController>().Land, LifeCircle));
     }
 }

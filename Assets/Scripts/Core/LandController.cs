@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 public class LandController : PlaceableObject
 {
-    private Land land;
+    public Land Land;
 
     public Action<Land> OnLandPlantedSelected;
     public Action<Land> OnLandSpaceSelected;
     public Action<Land> OnLandSwitchSelected;
+    //public Action<int> OnLandUpdateLifeCircleSelected;
 
     [Header("Sprite")]
     [SerializeField] private Sprite landSprite;
@@ -40,6 +41,7 @@ public class LandController : PlaceableObject
         OnLandSwitchSelected += OnSwitchSelected;
         OnLandPlantedSelected += OnLandPlantedSuccessChanged;
         OnLandSpaceSelected += OnLandSpaceSuccessChanged;
+        //OnLandUpdateLifeCircleSelected += OnLandUpdateLifeCircle;
 
         //tomatoSeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Tomato); });
         //blueberrySeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Blueberry); });
@@ -49,32 +51,15 @@ public class LandController : PlaceableObject
 
     private void OnMouseDown()
     {
-        if (land.IsPlanted)
+        if (Land.IsPlanted)
         {
-            Timer timer = gameObject.GetComponent<Timer>();
-            if (timer == null)
-            {
-                timer = gameObject.AddComponent<Timer>();
-                timer.Initialize(land.PlantedWith.Name, DateTime.Now, TimeSpan.FromSeconds(land.PlantedWith.GrowthTime), land.PlantedWith.NumbersInLifeCycle);
-                timer.StartTimer();
-                timer.TimerFinishEvent.AddListener(delegate
-                {
-                    LandSwitchToLandSpaceGameEvent landSwitchToLandSpaceGameEvent = new LandSwitchToLandSpaceGameEvent(land, OnLandSwitchSelected);
-                    EventManager.Instance.TriggerEvent(landSwitchToLandSpaceGameEvent);
-
-                    Destroy(timer);
-                });
-            }
-
             TimerTooltip.ShowTimer_Static(gameObject);
         }
         else
         {
-            LandSelectedGameEvent landSelectedGameEvent = new LandSelectedGameEvent(land, OnLandPlantedSelected);
+            LandSelectedGameEvent landSelectedGameEvent = new LandSelectedGameEvent(Land, OnLandPlantedSelected);
             EventManager.Instance.TriggerEvent(landSelectedGameEvent);
         }
-
-        Debug.Log("IsPlanteddddddd: " + land.IsPlanted);
 
         //isPlanted = true;
         //spriteRenderer.sprite = tomatoSprite;
@@ -93,21 +78,21 @@ public class LandController : PlaceableObject
     {
         spriteRenderer.sprite = landSprite;
 
-        land = _land;
+        Land = _land;
     }
 
     private void OnLandSpaceSuccessChanged(Land _land)
     {
         spriteRenderer.sprite = landSprite;
 
-        land = _land;
+        Land = _land;
     }
 
     private void OnLandPlantedSuccessChanged(Land _land)
     {
-        land = _land;
+        Land = _land;
 
-        switch (land.PlantedWith.PlantType)
+        switch (Land.PlantedWith.PlantType)
         {
             case PlantType.Tomato:
                 spriteRenderer.sprite = tomatoSprite;
@@ -125,6 +110,23 @@ public class LandController : PlaceableObject
                 spriteRenderer.sprite = landSprite;
                 break;
         }
+
+        Timer timer = gameObject.GetComponent<Timer>();
+
+        if (timer == null)
+        {
+            timer = gameObject.AddComponent<Timer>();
+        }
+
+        timer.Initialize(Land.PlantedWith.Name, DateTime.Now, TimeSpan.FromSeconds(Land.PlantedWith.GrowthTime), Land.PlantedWith.NumbersInLifeCycle);
+        timer.StartTimer();
+        timer.TimerFinishEvent.AddListener(delegate
+        {
+            LandSwitchToLandSpaceGameEvent landSwitchToLandSpaceGameEvent = new LandSwitchToLandSpaceGameEvent(Land, OnLandSwitchSelected);
+            EventManager.Instance.TriggerEvent(landSwitchToLandSpaceGameEvent);
+
+            Destroy(timer);
+        });
     }
 
     //private void OnLandPlantedSuccessChanged(LandPlantedSuccessGameEvent info)
@@ -153,24 +155,53 @@ public class LandController : PlaceableObject
     {
         base.Place();
 
-        if (isLoadData) return;
-        
-        GameManager.Instance.SetLandSpace(1, OnLandSpaceSelected, transform.position);
+        if (isLoadData)
+        {
+            if (!Land.IsPlanted) return;
+
+            Timer timer = gameObject.GetComponent<Timer>();
+            if (timer == null)
+            {
+                timer = gameObject.AddComponent<Timer>();
+            }
+
+            double elapsed = GameManager.Instance.GetCurrentTimestamp() - Land.StartTime;
+            double time = Land.PlantedWith.GrowthTime - elapsed;
+            Debug.Log(TimeSpan.FromSeconds(time));
+            timer.InitializeForLoadData(Land.PlantedWith.Name, DateTime.Now, TimeSpan.FromSeconds(time), Land.PlantedWith.CurrentCycle);
+            timer.StartTimer();
+            timer.TimerFinishEvent.AddListener(delegate
+            {
+                LandSwitchToLandSpaceGameEvent landSwitchToLandSpaceGameEvent = new LandSwitchToLandSpaceGameEvent(Land, OnLandSwitchSelected);
+                EventManager.Instance.TriggerEvent(landSwitchToLandSpaceGameEvent);
+
+                Destroy(timer);
+            });
+        }
+        else
+        {
+            GameManager.Instance.SetLandSpace(1, OnLandSpaceSelected, transform.position);
+        }
     }
 
     public void LoadDataLand(Land _land)
     {
-        Place(true);
+        Land = _land;
 
-        land = _land;
-
-        if (land.IsPlanted)
+        if (Land.IsPlanted)
         {
-            OnLandPlantedSuccessChanged(land);
+            OnLandPlantedSuccessChanged(Land);
         }
         else
         {
-            OnLandSpaceSuccessChanged(land);
+            OnLandSpaceSuccessChanged(Land);
         }
+
+        Place(true);
+    }
+
+    private void OnLandUpdateLifeCircle(int lifeCircle)
+    {
+        EventManager.Instance.TriggerEvent(new LandUpdateLifeCircleGameEvent(Land, lifeCircle));
     }
 }

@@ -35,7 +35,7 @@ public class TimerTooltip : MonoBehaviour
         }
 
         callerNameText.text = timer.Name;
-        liftCycleText.text = timer.LifeCycle.ToString();
+        liftCycleText.text = timer.LifeCircle.ToString();
         skipButton.gameObject.SetActive(true);
         skipAllButton.gameObject.SetActive(true);
 
@@ -59,9 +59,9 @@ public class TimerTooltip : MonoBehaviour
     public void UpdateTooltip()
     {
         callerNameText.text = timer.Name;
-        liftCycleText.text = timer.LifeCycle.ToString();
+        liftCycleText.text = timer.LifeCircle.ToString();
 
-        if (timer.LifeCycle <= 0)
+        if (timer.LifeCircle <= 0)
         {
             skipButton.gameObject.SetActive(false);
             skipAllButton.gameObject.SetActive(false);

@@ -25,6 +25,7 @@ public class DataManager : MonoBehaviour
         EventManager.Instance.AddListener<LandSpaceChangedGameEvent>(OnLandSpaceChanged);
         EventManager.Instance.AddListener<LandPlatedChangedGameEvent>(OnLandPlatedChanged);
         EventManager.Instance.AddListener<LandSwitchToLandSpaceGameEvent>(OnSwitchToLandSpace);
+        EventManager.Instance.AddListener<LandUpdateLifeCircleGameEvent>(OnLandUpdateLifeCircle);
     }
 
     public void LoadDataUser()
@@ -176,4 +177,12 @@ public class DataManager : MonoBehaviour
         info.OnLandSwitchSelected?.Invoke(landPlanted);
     }
 
+    private void OnLandUpdateLifeCircle(LandUpdateLifeCircleGameEvent info)
+    {
+        Land land = CurrentUser.Lands.FirstOrDefault(x => x.Name == info.Land.Name);
+
+        land.PlantedWith.CurrentCycle = info.LifeCircle;
+
+        jsonManager.SaveUser(CurrentUser);
+    }
 }
