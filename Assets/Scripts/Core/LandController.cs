@@ -51,16 +51,20 @@ public class LandController : PlaceableObject
     {
         if (land.IsPlanted)
         {
-            Timer timer = gameObject.AddComponent<Timer>();
-            timer.Initialize(land.PlantedWith.Name, DateTime.Now, TimeSpan.FromSeconds(land.PlantedWith.GrowthTime), land.PlantedWith.NumbersInLifeCycle);
-            timer.StartTimer();
-            timer.TimerFinishEvent.AddListener(delegate
+            Timer timer = gameObject.GetComponent<Timer>();
+            if (timer == null)
             {
-                LandSwitchToLandSpaceGameEvent landSwitchToLandSpaceGameEvent = new LandSwitchToLandSpaceGameEvent(land, OnLandSwitchSelected);
-                EventManager.Instance.TriggerEvent(landSwitchToLandSpaceGameEvent);
+                timer = gameObject.AddComponent<Timer>();
+                timer.Initialize(land.PlantedWith.Name, DateTime.Now, TimeSpan.FromSeconds(land.PlantedWith.GrowthTime), land.PlantedWith.NumbersInLifeCycle);
+                timer.StartTimer();
+                timer.TimerFinishEvent.AddListener(delegate
+                {
+                    LandSwitchToLandSpaceGameEvent landSwitchToLandSpaceGameEvent = new LandSwitchToLandSpaceGameEvent(land, OnLandSwitchSelected);
+                    EventManager.Instance.TriggerEvent(landSwitchToLandSpaceGameEvent);
 
-                Destroy(timer);
-            });
+                    Destroy(timer);
+                });
+            }
 
             TimerTooltip.ShowTimer_Static(gameObject);
         }
@@ -95,8 +99,6 @@ public class LandController : PlaceableObject
     private void OnLandSpaceSuccessChanged(Land _land)
     {
         land = _land;
-
-        Debug.Log("What");
     }
 
     private void OnLandPlantedSuccessChanged(Land _land)

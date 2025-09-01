@@ -14,7 +14,7 @@ public class DataManager : MonoBehaviour
         jsonManager = GetComponent<JsonManager>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         EventManager.Instance.AddListener<CurrencyChangeGameEvent>(OnCurrencyChange);
         EventManager.Instance.AddListener<LevelChangedGameEvent>(OnLevelChanged);
