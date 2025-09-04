@@ -190,14 +190,15 @@ public class LandController : PlaceableObject
 
         if (Land.IsPlanted)
         {
+            Place(true);
             OnLandPlantedSuccessChanged(Land);
         }
         else
         {
             OnLandSpaceSuccessChanged(Land);
+            Place(true);
         }
 
-        Place(true);
     }
 
     private void OnLandUpdateLifeCircle(int lifeCircle)
