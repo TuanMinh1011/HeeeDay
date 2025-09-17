@@ -21,7 +21,7 @@ public class SeedUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.Instance.AddListener<LandSelectedGameEvent>(LandSelectedChanged);
+        //EventManager.Instance.AddListener<LandSelectedGameEvent>(LandSelectedChanged);
     }
 
     //private void OnDisable()
@@ -29,27 +29,27 @@ public class SeedUIManager : MonoBehaviour
     //    EventManager.Instance.RemoveListener<LandSelectedGameEvent>(LandSelectedChanged);
     //}
 
-    private void LandSelectedChanged(LandSelectedGameEvent info)
-    {
-        _land = info.Land;
+    //private void LandSelectedChanged(LandSelectedGameEvent info)
+    //{
+    //    _land = info.Land;
 
-        seedPanel.SetActive(true);
+    //    seedPanel.SetActive(true);
 
-        tomatoSeedBtn.onClick.RemoveAllListeners();
-        blueberrySeedBtn.onClick.RemoveAllListeners();
-        strawberrySeedBtn.onClick.RemoveAllListeners();
-        cowSeedBtn.onClick.RemoveAllListeners();
+    //    tomatoSeedBtn.onClick.RemoveAllListeners();
+    //    blueberrySeedBtn.onClick.RemoveAllListeners();
+    //    strawberrySeedBtn.onClick.RemoveAllListeners();
+    //    cowSeedBtn.onClick.RemoveAllListeners();
 
-        tomatoSeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Tomato, info.OnLandSelected);});
-        blueberrySeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Blueberry, info.OnLandSelected);});
-        strawberrySeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Strawberry, info.OnLandSelected);});
-        cowSeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Cow, info.OnLandSelected);});
-    }
+    //    tomatoSeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Tomato, info.OnLandSelected);});
+    //    blueberrySeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Blueberry, info.OnLandSelected);});
+    //    strawberrySeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Strawberry, info.OnLandSelected);});
+    //    cowSeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Cow, info.OnLandSelected);});
+    //}
 
-    private void SetLandPlanted(PlantType plantType, Action<Land> onLandSelected)
-    {
-        GameManager.Instance.SetLandPlated(_land, plantType, onLandSelected);
+    //private void SetLandPlanted(PlantType plantType, Action<Land> onLandSelected)
+    //{
+    //    GameManager.Instance.SetLandPlated(_land, plantType, onLandSelected);
 
-        seedPanel.SetActive(false);
-    }
+    //    seedPanel.SetActive(false);
+    //}
 }

@@ -44,8 +44,8 @@ public class UIMangerTest : MonoBehaviour
         EventManager.Instance.AddListener<FruitChangedGameEvent>(OnFruitChanged);
         EventManager.Instance.AddListener<LandSpaceChangedGameEvent>(OnLandSpaceChanged);
         //EventManager.Instance.AddListener<LandPlatedChangedGameEvent>(OnLandPlantedChanged);
-        EventManager.Instance.AddListener<LandPlantedSuccessGameEvent>(OnLandPlantedSuccessChanged);
-        EventManager.Instance.AddListener<LandPlantedFailedGameEvent>(OnLandPlantedFailedChanged);
+        //EventManager.Instance.AddListener<LandPlantedSuccessGameEvent>(OnLandPlantedSuccessChanged);
+        //EventManager.Instance.AddListener<LandPlantedFailedGameEvent>(OnLandPlantedFailedChanged);
 
         for (int i = 0; i < seedsTextList.Count; i++)
         {
@@ -133,16 +133,16 @@ public class UIMangerTest : MonoBehaviour
         UpdateUI();
     }
 
-    private void OnLandPlantedSuccessChanged(LandPlantedSuccessGameEvent info)
-    {
-        landPlantedAmount += info.Amount;
-        landSpaceAmount -= info.Amount;
+    //private void OnLandPlantedSuccessChanged(LandPlantedSuccessGameEvent info)
+    //{
+    //    landPlantedAmount += info.Amount;
+    //    landSpaceAmount -= info.Amount;
 
-        UpdateUI();
-    }
+    //    UpdateUI();
+    //}
 
-    private void OnLandPlantedFailedChanged(LandPlantedFailedGameEvent info)
-    {
-        Debug.LogError($"{info.Reason}");
-    }
+    //private void OnLandPlantedFailedChanged(LandPlantedFailedGameEvent info)
+    //{
+    //    Debug.LogError($"{info.Reason}");
+    //}
 }

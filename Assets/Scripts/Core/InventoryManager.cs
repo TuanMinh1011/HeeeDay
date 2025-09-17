@@ -20,8 +20,8 @@ public class InventoryManager : MonoBehaviour
     {
         EventManager.Instance.AddListener<LoadDataGameEvent>(OnLoadData);
         EventManager.Instance.AddListener<LandSpaceChangedGameEvent>(OnLandSpanceChanged);
-        EventManager.Instance.AddListener<LandPlantedSuccessGameEvent>(OnLandPlantedSuccessChanged);
-        EventManager.Instance.AddListener<LandPlantedFailedGameEvent>(OnLandPlantedFaliedChanged);
+        //EventManager.Instance.AddListener<LandPlantedSuccessGameEvent>(OnLandPlantedSuccessChanged);
+        //EventManager.Instance.AddListener<LandPlantedFailedGameEvent>(OnLandPlantedFaliedChanged);
         EventManager.Instance.AddListener<SeedChangedGameEvent>(OnSeedChanged);
     }
 
@@ -71,14 +71,14 @@ public class InventoryManager : MonoBehaviour
         landSpaceText.text = landSpaceAmount.ToString();
     }
 
-    private void OnLandPlantedSuccessChanged(LandPlantedSuccessGameEvent info)
-    {
-        landPlantedAmount += info.Amount;
-        landSpaceAmount -= info.Amount;
+    //private void OnLandPlantedSuccessChanged(LandPlantedSuccessGameEvent info)
+    //{
+    //    landPlantedAmount += info.Amount;
+    //    landSpaceAmount -= info.Amount;
 
-        landPlantedText.text = landPlantedAmount.ToString();
-        landSpaceText.text = landSpaceAmount.ToString();
-    }
+    //    landPlantedText.text = landPlantedAmount.ToString();
+    //    landSpaceText.text = landSpaceAmount.ToString();
+    //}
 
     private void OnSeedChanged(SeedChangedGameEvent info)
     {
@@ -87,8 +87,8 @@ public class InventoryManager : MonoBehaviour
         seedsText[info.SeedType].text = seedsAmount[info.SeedType].ToString();
     }
 
-    private void OnLandPlantedFaliedChanged(LandPlantedFailedGameEvent info)
-    {
-        Debug.LogError("Failed to plant land: " + info.Reason);
-    }
+    //private void OnLandPlantedFaliedChanged(LandPlantedFailedGameEvent info)
+    //{
+    //    Debug.LogError("Failed to plant land: " + info.Reason);
+    //}
 }

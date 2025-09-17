@@ -20,7 +20,7 @@ public class PlaceableObject : MonoBehaviour
         return false;
     }
 
-    public virtual void Place(bool isLoadData = false)
+    public virtual void Place()
     {
         Vector3Int positionInt = BuildingSystem.Current.GridLayout.LocalToCell(transform.position);
         BoundsInt areaTemp = Area;

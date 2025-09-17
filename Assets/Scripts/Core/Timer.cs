@@ -110,7 +110,7 @@ public class Timer : MonoBehaviour
         LifeCircle--;
 
         //OnUpdateLifeCircle?.Invoke(LifeCircle);
-        EventManager.Instance.TriggerEvent(new LandUpdateLifeCircleGameEvent(GetComponent<LandController>().Land, LifeCircle));
+        //EventManager.Instance.TriggerEvent(new LandUpdateLifeCircleGameEvent(GetComponent<LandController>().Land, LifeCircle));
     }
 
     public void SkipTimer()
@@ -120,7 +120,7 @@ public class Timer : MonoBehaviour
         LifeCircle--;
 
         //OnUpdateLifeCircle?.Invoke(LifeCircle);
-        EventManager.Instance.TriggerEvent(new LandUpdateLifeCircleGameEvent(GetComponent<LandController>().Land, LifeCircle));
+        //EventManager.Instance.TriggerEvent(new LandUpdateLifeCircleGameEvent(GetComponent<LandController>().Land, LifeCircle));
     }
 
     public void SkipAllTimer()
@@ -130,6 +130,6 @@ public class Timer : MonoBehaviour
         LifeCircle = 0;
 
         //OnUpdateLifeCircle?.Invoke(LifeCircle);
-        EventManager.Instance.TriggerEvent(new LandUpdateLifeCircleGameEvent(GetComponent<LandController>().Land, LifeCircle));
+        //EventManager.Instance.TriggerEvent(new LandUpdateLifeCircleGameEvent(GetComponent<LandController>().Land, LifeCircle));
     }
 }

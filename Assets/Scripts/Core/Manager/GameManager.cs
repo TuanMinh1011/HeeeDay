@@ -22,45 +22,8 @@ public class GameManager : MonoBehaviour
         dataManager.LoadDataUser();
         dataManager.LoadDataPlant();
 
-        SetLandFromData();
+        //SetLandFromData();
     }
-    public void SetLandSpace(int amount, Action<Land> OnLandSpaceSelected, Vector3 position)
-    {
-        LandSpaceChangedGameEvent info = new LandSpaceChangedGameEvent(amount, OnLandSpaceSelected, position);
-        EventManager.Instance.QueueEvent(info);
-    }
-
-    public void SetLandPlated(Land land, PlantType plantType, Action<Land> onLandSelected)
-    {
-        Plant plant = dataManager.Plants.FirstOrDefault(x => x.PlantType == plantType);
-
-        //Plant plant = new Plant()
-        //{
-        //    Name = "Tomato",
-        //    GrowthTime = 600,
-        //    NumbersInLifeCycle = 40,
-        //    SellPrice = 5
-        //};
-
-        LandPlatedChangedGameEvent info = new LandPlatedChangedGameEvent(1, land, plant, onLandSelected);
-        EventManager.Instance.QueueEvent(info);
-
-        //SeedChangedGameEvent infoo = new SeedChangedGameEvent(-1, (SeedType)plantType);
-        //EventManager.Instance.QueueEvent(infoo);
-    }
-        
-    private void SetLandFromData()
-    {
-        var lands = dataManager.CurrentUser.Lands.ToList();
-
-        if (lands.Count <= 0) return;
-
-        foreach (Land land in lands)
-        {
-            BuildingSystem.Current.InitializeWithObjectFromData(plant, new Vector3(land.LandPos.x, land.LandPos.y, land.LandPos.z), land);
-        }
-    }
-
 
     public double GetCurrentTimestamp()
     {
@@ -68,6 +31,43 @@ public class GameManager : MonoBehaviour
     }
 
     #region Old Test
+    //public void SetLandSpace(int amount, Action<Land> OnLandSpaceSelected, Vector3 position)
+    //{
+    //    LandSpaceChangedGameEvent info = new LandSpaceChangedGameEvent(amount, OnLandSpaceSelected, position);
+    //    EventManager.Instance.QueueEvent(info);
+    //}
+
+    //public void SetLandPlated(Land land, PlantType plantType, Action<Land> onLandSelected)
+    //{
+    //    Plant plant = dataManager.Plants.FirstOrDefault(x => x.PlantType == plantType);
+
+    //    //Plant plant = new Plant()
+    //    //{
+    //    //    Name = "Tomato",
+    //    //    GrowthTime = 600,
+    //    //    NumbersInLifeCycle = 40,
+    //    //    SellPrice = 5
+    //    //};
+
+    //    LandPlatedChangedGameEvent info = new LandPlatedChangedGameEvent(1, land, plant, onLandSelected);
+    //    EventManager.Instance.QueueEvent(info);
+
+    //    //SeedChangedGameEvent infoo = new SeedChangedGameEvent(-1, (SeedType)plantType);
+    //    //EventManager.Instance.QueueEvent(infoo);
+    //}
+
+    //private void SetLandFromData()
+    //{
+    //    var lands = dataManager.CurrentUser.Lands.ToList();
+
+    //    if (lands.Count <= 0) return;
+
+    //    foreach (Land land in lands)
+    //    {
+    //        BuildingSystem.Current.InitializeWithObjectFromData(plant, new Vector3(land.LandPos.x, land.LandPos.y, land.LandPos.z), land);
+    //    }
+    //}
+
     public void SetLevel(int amount)
     {
         LevelChangedGameEvent info = new LevelChangedGameEvent(amount);

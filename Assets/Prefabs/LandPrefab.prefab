@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4905394534473803416}
   - component: {fileID: -6914007704198968022}
-  - component: {fileID: -1363795743541114195}
+  - component: {fileID: -334303920013914086}
   m_Layer: 0
   m_Name: LandPrefab
   m_TagString: Untagged
@@ -167,7 +167,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 1.5}
   m_EdgeRadius: 0
---- !u!114 &-1363795743541114195
+--- !u!114 &-334303920013914086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,13 +176,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4610033564499203599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dccb060af445d6d47acac9a7a2316909, type: 3}
+  m_Script: {fileID: 11500000, guid: b57bc699f0cf0f142bf6d9e2bdb7df37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Area:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 3, y: 3, z: 1}
-  landSprite: {fileID: 978493776, guid: 2b98a1a188cf3dd4ca81d030333493af, type: 3}
+  landSprite: {fileID: -1400793638, guid: 2b98a1a188cf3dd4ca81d030333493af, type: 3}
   tomatoSprite: {fileID: 680645575, guid: 2b98a1a188cf3dd4ca81d030333493af, type: 3}
   blueberrySprite: {fileID: -1343434854, guid: 2b98a1a188cf3dd4ca81d030333493af, type: 3}
   strawberrySprite: {fileID: -1568204664, guid: 2b98a1a188cf3dd4ca81d030333493af, type: 3}

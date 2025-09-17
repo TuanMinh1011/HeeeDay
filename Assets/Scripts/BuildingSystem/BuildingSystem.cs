@@ -76,7 +76,8 @@ public class BuildingSystem : MonoBehaviour
         Vector3 position = GridLayout.CellToLocalInterpolated(cellPos);
 
         GameObject obj = Instantiate(building, position, Quaternion.identity);
-        obj.GetComponent<LandController>().LoadDataLand(land);
+        obj.GetComponent<PlaceableObject>().Place();
+        //obj.GetComponent<LandController>().LoadDataLand(land);
     }
 
     public bool CanTakeArea(BoundsInt area)

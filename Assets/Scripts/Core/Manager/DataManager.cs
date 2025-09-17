@@ -23,9 +23,9 @@ public class DataManager : MonoBehaviour
         EventManager.Instance.AddListener<SeedChangedGameEvent>(OnSeedChanged);
         //EventManager.Instance.AddListener<FruitChangedGameEvent>(OnFruitChanged);
         EventManager.Instance.AddListener<LandSpaceChangedGameEvent>(OnLandSpaceChanged);
-        EventManager.Instance.AddListener<LandPlatedChangedGameEvent>(OnLandPlatedChanged);
-        EventManager.Instance.AddListener<LandSwitchToLandSpaceGameEvent>(OnSwitchToLandSpace);
-        EventManager.Instance.AddListener<LandUpdateLifeCircleGameEvent>(OnLandUpdateLifeCircle);
+        //EventManager.Instance.AddListener<LandPlatedChangedGameEvent>(OnLandPlatedChanged);
+        //EventManager.Instance.AddListener<LandSwitchToLandSpaceGameEvent>(OnSwitchToLandSpace);
+        //EventManager.Instance.AddListener<LandUpdateLifeCircleGameEvent>(OnLandUpdateLifeCircle);
     }
 
     public void LoadDataUser()
@@ -128,61 +128,61 @@ public class DataManager : MonoBehaviour
 
         //EventManager.Instance.TriggerEvent(new LandSpaceSuccessGameEvent(newLandSpace));
 
-        info.OnLandSpaceSelected?.Invoke(newLandSpace);
+        //info.OnLandSpaceSelected?.Invoke(newLandSpace);
     }
 
-    private void OnLandPlatedChanged(LandPlatedChangedGameEvent info)
-    {
-        Land landSpace = CurrentUser.Lands.FirstOrDefault(x => x.Name == info.Land.Name);
+    //private void OnLandPlatedChanged(LandPlatedChangedGameEvent info)
+    //{
+    //    Land landSpace = CurrentUser.Lands.FirstOrDefault(x => x.Name == info.Land.Name);
 
-        try
-        {
-            if (landSpace == null) throw new Exception("No available land to plant."); 
+    //    try
+    //    {
+    //        if (landSpace == null) throw new Exception("No available land to plant."); 
 
-            if (landSpace.IsPlanted) throw new Exception("This land is already planted.");
+    //        if (landSpace.IsPlanted) throw new Exception("This land is already planted.");
 
-            Seed seed = CurrentUser.SeedUnused.FirstOrDefault(x => x.SeedType == (SeedType)info.PlantedWith.PlantType);
-            if (seed.Amount <= 0) throw new Exception("Not enough seeds to plant"); 
+    //        Seed seed = CurrentUser.SeedUnused.FirstOrDefault(x => x.SeedType == (SeedType)info.PlantedWith.PlantType);
+    //        if (seed.Amount <= 0) throw new Exception("Not enough seeds to plant"); 
 
-            landSpace.IsPlanted = true;
-            landSpace.PlantedWith = info.PlantedWith;
-            landSpace.StartTime = GameManager.Instance.GetCurrentTimestamp();
+    //        landSpace.IsPlanted = true;
+    //        landSpace.PlantedWith = info.PlantedWith;
+    //        landSpace.StartTime = GameManager.Instance.GetCurrentTimestamp();
 
-            LandPlantedSuccessGameEvent success = new LandPlantedSuccessGameEvent(1, landSpace);
-            EventManager.Instance.TriggerEvent(success);
+    //        LandPlantedSuccessGameEvent success = new LandPlantedSuccessGameEvent(1, landSpace);
+    //        EventManager.Instance.TriggerEvent(success);
 
-            SeedChangedGameEvent infoff = new SeedChangedGameEvent(-1, (SeedType)landSpace.PlantedWith.PlantType);
-            EventManager.Instance.TriggerEvent(infoff);
+    //        SeedChangedGameEvent infoff = new SeedChangedGameEvent(-1, (SeedType)landSpace.PlantedWith.PlantType);
+    //        EventManager.Instance.TriggerEvent(infoff);
 
-            info.OnLandSelected?.Invoke(landSpace);
+    //        info.OnLandSelected?.Invoke(landSpace);
 
-            jsonManager.SaveUser(CurrentUser);
-        }
-        catch (Exception ex)
-        {
-            LandPlantedFailedGameEvent failed = new LandPlantedFailedGameEvent(ex.Message);
-            EventManager.Instance.TriggerEvent(failed);
-        }
-    }
+    //        jsonManager.SaveUser(CurrentUser);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        LandPlantedFailedGameEvent failed = new LandPlantedFailedGameEvent(ex.Message);
+    //        EventManager.Instance.TriggerEvent(failed);
+    //    }
+    //}
 
-    private void OnSwitchToLandSpace(LandSwitchToLandSpaceGameEvent info)
-    {
-        Land landPlanted = CurrentUser.Lands.FirstOrDefault(x => x.Name == info.Land.Name);
+    //private void OnSwitchToLandSpace(LandSwitchToLandSpaceGameEvent info)
+    //{
+    //    Land landPlanted = CurrentUser.Lands.FirstOrDefault(x => x.Name == info.Land.Name);
 
-        landPlanted.IsPlanted = false;
-        landPlanted.PlantedWith = null;
+    //    landPlanted.IsPlanted = false;
+    //    landPlanted.PlantedWith = null;
 
-        jsonManager.SaveUser(CurrentUser);
+    //    jsonManager.SaveUser(CurrentUser);
 
-        info.OnLandSwitchSelected?.Invoke(landPlanted);
-    }
+    //    info.OnLandSwitchSelected?.Invoke(landPlanted);
+    //}
 
-    private void OnLandUpdateLifeCircle(LandUpdateLifeCircleGameEvent info)
-    {
-        Land land = CurrentUser.Lands.FirstOrDefault(x => x.Name == info.Land.Name);
+    //private void OnLandUpdateLifeCircle(LandUpdateLifeCircleGameEvent info)
+    //{
+    //    Land land = CurrentUser.Lands.FirstOrDefault(x => x.Name == info.Land.Name);
 
-        land.PlantedWith.CurrentCycle = info.LifeCircle;
+    //    land.PlantedWith.CurrentCycle = info.LifeCircle;
 
-        jsonManager.SaveUser(CurrentUser);
-    }
+    //    jsonManager.SaveUser(CurrentUser);
+    //}
 }
