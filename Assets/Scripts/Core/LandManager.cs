@@ -11,12 +11,6 @@ public class LandManager : MonoBehaviour
         EventManager.Instance.AddListener<LandPlantedSuccessGameEvent>(OnLandPlantedSuccessChanged);
     }
 
-    private void OnDisable()
-    {
-        EventManager.Instance.RemoveListener<LandSpaceSuccessGameEvent>(OnLandSpaceSuccessChanged);
-        EventManager.Instance.RemoveListener<LandPlantedSuccessGameEvent>(OnLandPlantedSuccessChanged);
-    }
-
     private void OnLandSpaceSuccessChanged(LandSpaceSuccessGameEvent info)
     {
 

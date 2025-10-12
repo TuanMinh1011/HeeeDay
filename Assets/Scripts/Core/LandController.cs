@@ -45,8 +45,8 @@ public class LandController : MonoBehaviour
         //GameManager.Instance.SetLandPlated(1, PlantType.Tomato);
         //UIManager.Instance.ShowSeedUI(true, this);
 
-        LandSelectedGameEvent landSelectedGameEvent = new LandSelectedGameEvent(land);
-        EventManager.Instance.TriggerEvent(landSelectedGameEvent);
+        //LandSelectedGameEvent landSelectedGameEvent = new LandSelectedGameEvent(land);
+        //EventManager.Instance.TriggerEvent(landSelectedGameEvent);
     }
 
     private void OnLandSpaceSuccessChanged(LandSpaceSuccessGameEvent info)

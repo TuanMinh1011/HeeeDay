@@ -20,34 +20,34 @@ public class SeedUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.Instance.AddListener<LandSelectedGameEvent>(LandSelectedChanged);
+        //EventManager.Instance.AddListener<LandSelectedGameEvent>(LandSelectedChanged);
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.RemoveListener<LandSelectedGameEvent>(LandSelectedChanged);
+        //EventManager.Instance.RemoveListener<LandSelectedGameEvent>(LandSelectedChanged);
     }
 
-    private void LandSelectedChanged(LandSelectedGameEvent info)
-    {
-        _land = info.Land;
-        seedPanel.SetActive(true);
+    //private void LandSelectedChanged(LandSelectedGameEvent info)
+    //{
+    //    _land = info.Land;
+    //    seedPanel.SetActive(true);
 
-        tomatoSeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Tomato); });
-        blueberrySeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Blueberry); });
-        strawberrySeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Strawberry); });
-        cowSeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Cow); });
-    }
+    //    tomatoSeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Tomato); });
+    //    blueberrySeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Blueberry); });
+    //    strawberrySeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Strawberry); });
+    //    cowSeedBtn.onClick.AddListener(() => { SetLandPlanted(PlantType.Cow); });
+    //}
 
-    private void SetLandPlanted(PlantType plantType)
-    {
-        GameManager.Instance.SetLandPlated(_land, plantType);
+    //private void SetLandPlanted(PlantType plantType)
+    //{
+    //    GameManager.Instance.SetLandPlated(_land, plantType);
 
-        tomatoSeedBtn.onClick.RemoveAllListeners();
-        blueberrySeedBtn.onClick.RemoveAllListeners();
-        strawberrySeedBtn.onClick.RemoveAllListeners();
-        cowSeedBtn.onClick.RemoveAllListeners();
+    //    tomatoSeedBtn.onClick.RemoveAllListeners();
+    //    blueberrySeedBtn.onClick.RemoveAllListeners();
+    //    strawberrySeedBtn.onClick.RemoveAllListeners();
+    //    cowSeedBtn.onClick.RemoveAllListeners();
 
-        seedPanel.SetActive(false);
-    }
+    //    seedPanel.SetActive(false);
+    //}
 }
